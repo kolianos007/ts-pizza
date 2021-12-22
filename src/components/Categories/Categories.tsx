@@ -1,20 +1,38 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 
 interface IProps {
- items: Array<string>;
+  items: Array<string>;
 }
 
+type TActiveItem = number | null;
+
 const Categories: FC<IProps> = ({ items }) => {
- return (
-  <div className="categories">
-   <ul>
-    <li className="active">Все</li>
-    {items.map((item: string) => (
-     <li>{item}</li>
-    ))}
-   </ul>
-  </div>
- );
+  const [activeItem, setActiveItem] = useState<TActiveItem>(null);
+
+  const onSelectItem = (index: TActiveItem) => {
+    setActiveItem(index);
+  };
+  return (
+    <div className="categories">
+      <ul>
+        <li
+          className={activeItem === null ? "active" : "d"}
+          onClick={() => onSelectItem(null)}
+        >
+          Все
+        </li>
+        {items.map((name: string, index) => (
+          <li
+            className={index === activeItem ? "active" : ""}
+            onClick={() => onSelectItem(index)}
+            key={`${name}_${index}`}
+          >
+            {name}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 };
 
 export default Categories;
