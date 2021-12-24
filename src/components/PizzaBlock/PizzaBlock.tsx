@@ -1,18 +1,42 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
+import { IPizza } from "../../types/types";
+import classNames from "classnames";
 
-const PizzaBlock: FC = () => {
+const PizzaBlock: FC<IPizza> = ({
+  id,
+  imageUrl,
+  name,
+  types,
+  sizes,
+  price,
+  category,
+  rating,
+}) => {
+  const [activeType, setActiveType] = useState(types[0]);
+  const typeNames = ["тонкое", "традиционное"];
+  console.log(sizes, category, rating, id);
+
+  const onSelectType = (index: number) => {
+    setActiveType(index);
+  };
   return (
     <div className="pizza-block">
-      <img
-        className="pizza-block__image"
-        src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
-        alt="Pizza"
-      />
-      <h4 className="pizza-block__title">Чизбургер-пицца</h4>
+      <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
+      <h4 className="pizza-block__title">{name}</h4>
       <div className="pizza-block__selector">
         <ul>
-          <li className="active">тонкое</li>
-          <li>традиционное</li>
+          {typeNames.map((type, i) => (
+            <li
+              key={type}
+              onClick={() => onSelectType(i)}
+              className={classNames({
+                active: activeType === i,
+                disabled: !types.includes(i),
+              })}
+            >
+              {type}
+            </li>
+          ))}
         </ul>
         <ul>
           <li className="active">26 см.</li>
@@ -21,7 +45,7 @@ const PizzaBlock: FC = () => {
         </ul>
       </div>
       <div className="pizza-block__bottom">
-        <div className="pizza-block__price">от 395 ₽</div>
+        <div className="pizza-block__price">от {price} ₽</div>
         <div className="button button--outline button--add">
           <svg
             width="12"

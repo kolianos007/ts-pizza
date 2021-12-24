@@ -6,7 +6,6 @@ interface IProps {
 
 const Sort: FC<IProps> = ({ items }) => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
-  console.log("isVisible", isVisible);
   const [activeItem, isActiveItem] = useState<number>(0);
   const sortRef = useRef<HTMLDivElement | null>(null);
   const activeItemName = items[activeItem];
