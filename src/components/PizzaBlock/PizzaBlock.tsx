@@ -13,11 +13,16 @@ const PizzaBlock: FC<IPizza> = ({
   rating,
 }) => {
   const [activeType, setActiveType] = useState(types[0]);
-  const typeNames = ["тонкое", "традиционное"];
+  const [activeSize, setActiveSize] = useState(sizes[0]);
+  const availableTypes = ["тонкое", "традиционное"];
+  const availableSizes = [26, 30, 40];
   console.log(sizes, category, rating, id);
 
   const onSelectType = (index: number) => {
     setActiveType(index);
+  };
+  const onSelectSize = (index: number) => {
+    setActiveSize(index);
   };
   return (
     <div className="pizza-block">
@@ -25,7 +30,7 @@ const PizzaBlock: FC<IPizza> = ({
       <h4 className="pizza-block__title">{name}</h4>
       <div className="pizza-block__selector">
         <ul>
-          {typeNames.map((type, i) => (
+          {availableTypes.map((type, i) => (
             <li
               key={type}
               onClick={() => onSelectType(i)}
@@ -39,9 +44,21 @@ const PizzaBlock: FC<IPizza> = ({
           ))}
         </ul>
         <ul>
-          <li className="active">26 см.</li>
+          {availableSizes.map((el, i) => (
+            <li
+              key={el}
+              onClick={() => onSelectSize(i)}
+              className={classNames({
+                active: activeSize === el,
+                disabled: !sizes.includes(el),
+              })}
+            >
+              {el} см.
+            </li>
+          ))}
+          {/* <li className="active">26 см.</li>
           <li>30 см.</li>
-          <li>40 см.</li>
+          <li>40 см.</li> */}
         </ul>
       </div>
       <div className="pizza-block__bottom">
