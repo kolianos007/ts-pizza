@@ -14,15 +14,16 @@ const PizzaBlock: FC<IPizza> = ({
 }) => {
   const [activeType, setActiveType] = useState(types[0]);
   const [activeSize, setActiveSize] = useState(sizes[0]);
+  console.log("activeSize", activeSize);
   const availableTypes = ["тонкое", "традиционное"];
   const availableSizes = [26, 30, 40];
-  console.log(sizes, category, rating, id);
+  // console.log(sizes, category, rating, id);
 
   const onSelectType = (index: number) => {
     setActiveType(index);
   };
   const onSelectSize = (index: number) => {
-    setActiveSize(index);
+    setActiveSize(availableSizes[index]);
   };
   return (
     <div className="pizza-block">
@@ -49,11 +50,11 @@ const PizzaBlock: FC<IPizza> = ({
               key={el}
               onClick={() => onSelectSize(i)}
               className={classNames({
-                active: activeSize === el,
+                active: activeSize === availableSizes[i],
                 disabled: !sizes.includes(el),
               })}
             >
-              {el} см.
+              {el} см. {console.log(activeSize, availableSizes[i])}
             </li>
           ))}
           {/* <li className="active">26 см.</li>

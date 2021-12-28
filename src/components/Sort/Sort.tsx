@@ -1,14 +1,14 @@
 import React, { FC, useEffect, useRef, useState } from "react";
 
 interface IProps {
-  items: Array<string>;
+  items: Array<{ name: string; type: string }>;
 }
 
 const Sort: FC<IProps> = ({ items }) => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [activeItem, isActiveItem] = useState<number>(0);
   const sortRef = useRef<HTMLDivElement | null>(null);
-  const activeItemName = items[activeItem];
+  const activeItemName = items[activeItem].name;
 
   const toggleVisiblePopup = () => {
     setIsVisible(!isVisible);
@@ -50,11 +50,11 @@ const Sort: FC<IProps> = ({ items }) => {
       {isVisible && (
         <div className="sort__popup">
           <ul>
-            {items.map((name: string, index) => (
+            {items.map(({ name, type }, index) => (
               <li
                 className={index === activeItem ? "active" : ""}
                 onClick={() => onSelectItem(index)}
-                key={`${name}_${index}`}
+                key={`${type}_${index}`}
               >
                 {name}
               </li>

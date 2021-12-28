@@ -2,15 +2,17 @@ import React, { FC, useState } from "react";
 
 interface IProps {
   items: Array<string>;
+  onClickItem: (index: TActiveItem) => void;
 }
 
 type TActiveItem = number | null;
 
-const Categories: FC<IProps> = ({ items }) => {
+const Categories: FC<IProps> = ({ items, onClickItem }) => {
   const [activeItem, setActiveItem] = useState<TActiveItem>(null);
 
   const onSelectItem = (index: TActiveItem) => {
     setActiveItem(index);
+    onClickItem(index);
   };
   return (
     <div className="categories">
