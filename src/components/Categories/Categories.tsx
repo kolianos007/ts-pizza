@@ -7,8 +7,9 @@ interface IProps {
 
 type TActiveItem = number | null;
 
-const Categories: FC<IProps> = ({ items, onClickItem }) => {
+const Categories: FC<IProps> = React.memo(({ items, onClickItem }) => {
   const [activeItem, setActiveItem] = useState<TActiveItem>(null);
+  console.log("RENDER CATEGORIES");
 
   const onSelectItem = (index: TActiveItem) => {
     setActiveItem(index);
@@ -35,6 +36,6 @@ const Categories: FC<IProps> = ({ items, onClickItem }) => {
       </ul>
     </div>
   );
-};
+});
 
 export default Categories;

@@ -18,14 +18,27 @@ import pizzaActions from "./store/actions/pizzas";
 // type PropsType = IMapStateToProps & IMapDispatchToProps;
 
 // const App: FC<PropsType> = () => {
+
+declare global {
+  interface Window {
+    test: any;
+  }
+}
 const App: FC = () => {
   const dispatch = useDispatch();
+
+  // window.test = (): void => {
+  //   axios
+  //     .get("http://localhost:3000/db.json")
+  //     .then((response) =>
+  //       dispatch(pizzaActions.setPizzas(response.data.pizzas))
+  //     );
+  // };
+
   useEffect(() => {
     axios
-      .get("http://localhost:3000/db.json")
-      .then((response) =>
-        dispatch(pizzaActions.setPizzas(response.data.pizzas))
-      );
+      .get("http://localhost:3001/pizzas")
+      .then((response) => dispatch(pizzaActions.setPizzas(response.data)));
   }, []);
   return (
     <div className="App">

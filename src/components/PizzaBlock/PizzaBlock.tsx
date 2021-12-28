@@ -14,7 +14,6 @@ const PizzaBlock: FC<IPizza> = ({
 }) => {
   const [activeType, setActiveType] = useState(types[0]);
   const [activeSize, setActiveSize] = useState(sizes[0]);
-  console.log("activeSize", activeSize);
   const availableTypes = ["тонкое", "традиционное"];
   const availableSizes = [26, 30, 40];
   // console.log(sizes, category, rating, id);
@@ -54,7 +53,7 @@ const PizzaBlock: FC<IPizza> = ({
                 disabled: !sizes.includes(el),
               })}
             >
-              {el} см. {console.log(activeSize, availableSizes[i])}
+              {el} см. 
             </li>
           ))}
           {/* <li className="active">26 см.</li>

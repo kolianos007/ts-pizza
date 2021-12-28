@@ -4,7 +4,7 @@ interface IProps {
   items: Array<{ name: string; type: string }>;
 }
 
-const Sort: FC<IProps> = ({ items }) => {
+const Sort: FC<IProps> = React.memo(({ items }) => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [activeItem, isActiveItem] = useState<number>(0);
   const sortRef = useRef<HTMLDivElement | null>(null);
@@ -64,6 +64,6 @@ const Sort: FC<IProps> = ({ items }) => {
       )}
     </div>
   );
-};
+});
 
 export default Sort;
