@@ -1,7 +1,7 @@
 import React, { FC, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Categories, PizzaBlock, Sort } from "../components";
+import { Categories, PizzaBlock, PizzaLoadingBlock, Sort } from "../components";
 import filterActions from "../store/actions/filters";
 import { fetchPizzas } from "../store/actions/pizzas";
 import { AppStateType } from "../store/reducers";
@@ -30,21 +30,20 @@ const sortItems = [
 // const Home: FC<IProps> = ({ items }) => {
 const Home: FC = () => {
   const dispatch = useDispatch();
-  const { items }: { items: TPizzaList } = useSelector(
-    ({ pizzas, filters }: AppStateType) => {
+  const { items, isLoaded }: { items: TPizzaList; isLoaded: boolean } =
+    useSelector(({ pizzas }: AppStateType) => {
       return {
         items: pizzas.items,
-        sortBy: filters.sortBy,
+        isLoaded: pizzas.isLoaded,
       };
-    }
-  );
+    });
+
+  const { category, sortBy }: { category: number | null; sortBy: string } =
+    useSelector(({ filters }: AppStateType) => filters);
 
   useEffect(() => {
-    // axios
-    //   .get("http://localhost:3001/pizzas")
-    //   .then((response) => dispatch(pizzaActions.setPizzas(response.data)));
     dispatch(fetchPizzas());
-  }, []);
+  }, [category]);
 
   const onSelectCategory = useCallback((index: number | null) => {
     dispatch(filterActions.setCategory(index));
@@ -62,7 +61,13 @@ const Home: FC = () => {
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
-        {items && items.map((obj) => <PizzaBlock key={obj.id} {...obj} />)}
+        {isLoaded
+          ? items.map((obj) => (
+              <PizzaBlock isLoading={true} key={obj.id} {...obj} />
+            ))
+          : Array(12)
+              .fill(0)
+              .map((_, i) => <PizzaLoadingBlock key={i} />)}
       </div>
     </div>
   );

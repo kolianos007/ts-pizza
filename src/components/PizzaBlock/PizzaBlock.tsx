@@ -1,8 +1,13 @@
 import React, { FC, useState } from "react";
 import { IPizza } from "../../types/types";
 import classNames from "classnames";
+import PizzaLoadingBlock from "./PizzaLoadingBlock";
 
-const PizzaBlock: FC<IPizza> = ({
+interface PropTypes extends IPizza {
+  isLoading: boolean;
+}
+
+const PizzaBlock: FC<PropTypes> = ({
   id,
   imageUrl,
   name,
@@ -11,6 +16,7 @@ const PizzaBlock: FC<IPizza> = ({
   price,
   category,
   rating,
+  isLoading,
 }) => {
   const [activeType, setActiveType] = useState(types[0]);
   const [activeSize, setActiveSize] = useState(sizes[0]);
@@ -24,6 +30,7 @@ const PizzaBlock: FC<IPizza> = ({
   const onSelectSize = (index: number) => {
     setActiveSize(availableSizes[index]);
   };
+
   return (
     <div className="pizza-block">
       <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
@@ -53,7 +60,7 @@ const PizzaBlock: FC<IPizza> = ({
                 disabled: !sizes.includes(el),
               })}
             >
-              {el} см. 
+              {el} см.
             </li>
           ))}
           {/* <li className="active">26 см.</li>
