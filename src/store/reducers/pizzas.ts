@@ -13,7 +13,8 @@ const pizzas = (state = initialState, action: PizzaActionsType):InitialState => 
         case "SET_PIZZAS":
             return {
                 ...state,
-                items: action.payload
+                items: action.payload,
+                isLoaded: true
             }
         default: 
             return state

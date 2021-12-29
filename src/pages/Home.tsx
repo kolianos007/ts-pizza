@@ -1,8 +1,9 @@
-import React, { FC, useCallback } from "react";
+import React, { FC, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Categories, PizzaBlock, Sort } from "../components";
 import filterActions from "../store/actions/filters";
+import { fetchPizzas } from "../store/actions/pizzas";
 import { AppStateType } from "../store/reducers";
 import { TPizzaList } from "../types/types";
 
@@ -37,6 +38,13 @@ const Home: FC = () => {
       };
     }
   );
+
+  useEffect(() => {
+    // axios
+    //   .get("http://localhost:3001/pizzas")
+    //   .then((response) => dispatch(pizzaActions.setPizzas(response.data)));
+    dispatch(fetchPizzas());
+  }, []);
 
   const onSelectCategory = useCallback((index: number | null) => {
     dispatch(filterActions.setCategory(index));

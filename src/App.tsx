@@ -5,7 +5,7 @@ import { Routes, Route } from "react-router-dom";
 import { Cart, Home } from "./pages";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import pizzaActions from "./store/actions/pizzas";
+import pizzaActions, { fetchPizzas } from "./store/actions/pizzas";
 
 // interface IMapStateToProps {
 //   items: TPizzaList;
@@ -25,8 +25,6 @@ declare global {
   }
 }
 const App: FC = () => {
-  const dispatch = useDispatch();
-
   // window.test = (): void => {
   //   axios
   //     .get("http://localhost:3000/db.json")
@@ -35,11 +33,6 @@ const App: FC = () => {
   //     );
   // };
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:3001/pizzas")
-      .then((response) => dispatch(pizzaActions.setPizzas(response.data)));
-  }, []);
   return (
     <div className="App">
       <div className="wrapper">
