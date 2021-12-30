@@ -16,6 +16,11 @@ const pizzas = (state = initialState, action: PizzaActionsType):InitialState => 
                 items: action.payload,
                 isLoaded: true
             }
+        case "SET_LOADED":
+            return {
+                ...state,
+                isLoaded: action.payload
+            }
         default: 
             return state
     }

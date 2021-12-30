@@ -1,7 +1,7 @@
 import { InferActionsTypes } from "../store"
 
 const filterActions = {
-    setSortBy: (sortBy: string) => ({
+    setSortBy: (sortBy: {type: string, order:string}) => ({
         type: "SET_SORT_BY",
         payload: sortBy
     } as const),

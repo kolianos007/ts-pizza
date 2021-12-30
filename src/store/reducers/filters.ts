@@ -1,8 +1,11 @@
 import { FiltersActionsType } from "../actions/filters"
 
 const initialState = {
-    category: 0 as number | null,
-    sortBy: "popular"
+    category: null as number | null,
+    sortBy: {
+        type: 'popular',
+        order: 'desc'
+    }
 }
 
 type InitialState = typeof initialState

@@ -10,12 +10,17 @@ const pizzaActions = {
     setPizzas: (items: TPizzaList) => ({
         type: "SET_PIZZAS",
         payload: items
+    } as const),
+    setLoaded: (payload: boolean) => ({
+        type: "SET_LOADED",
+        payload
     } as const)
 }
 
-export const fetchPizzas = () => (dispatch: ThunkDispatch<AppStateType, {}, any>) => {
+export const fetchPizzas = (sortBy: any, category: number | null) => (dispatch: ThunkDispatch<AppStateType, {}, any>) => {
+    dispatch(pizzaActions.setLoaded(false))
     axios
-      .get("http://localhost:3001/pizzas")
+      .get(`http://localhost:3001/pizzas?${category !== null ? `category=${category}` : ''}&_sort=${sortBy.type}&_order=${sortBy.order}`)
       .then((response) => dispatch(pizzaActions.setPizzas(response.data)));
 }
 

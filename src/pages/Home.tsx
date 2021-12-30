@@ -20,9 +20,9 @@ const categoryNames = [
 ];
 
 const sortItems = [
-  { name: "популярности", type: "popular" },
-  { name: "цене", type: "price" },
-  { name: "алфавиту", type: "alphabet" },
+  { name: "популярности", type: "popular", order: "desc" },
+  { name: "цене", type: "price", order: "desc" },
+  { name: "алфавиту", type: "name", order: "asc" },
 ];
 
 // let oldItems: any = [];
@@ -38,16 +38,23 @@ const Home: FC = () => {
       };
     });
 
-  const { category, sortBy }: { category: number | null; sortBy: string } =
+  const { category, sortBy }: { category: number | null; sortBy: any } =
     useSelector(({ filters }: AppStateType) => filters);
 
   useEffect(() => {
-    dispatch(fetchPizzas());
-  }, [category]);
+    dispatch(fetchPizzas(sortBy, category));
+  }, [category, sortBy]);
 
   const onSelectCategory = useCallback((index: number | null) => {
     dispatch(filterActions.setCategory(index));
   }, []);
+
+  const onSelectSortType = useCallback(
+    (type: { type: string; order: string }) => {
+      dispatch(filterActions.setSortBy(type));
+    },
+    []
+  );
 
   // console.log(oldItems === items, { oldItems, items });
   // oldItems = items;
@@ -56,8 +63,16 @@ const Home: FC = () => {
   return (
     <div className="container">
       <div className="content__top">
-        <Categories onClickItem={onSelectCategory} items={categoryNames} />
-        <Sort items={sortItems} />
+        <Categories
+          activeCategoryIndex={category}
+          onClickItem={onSelectCategory}
+          items={categoryNames}
+        />
+        <Sort
+          activeSortBy={sortBy.type}
+          items={sortItems}
+          onClickSortType={onSelectSortType}
+        />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
