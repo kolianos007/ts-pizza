@@ -2,9 +2,31 @@ import React, { FC, useState } from "react";
 import { IPizza } from "../../types/types";
 import classNames from "classnames";
 import PizzaLoadingBlock from "./PizzaLoadingBlock";
+import Button from "../Button/Button";
 
 interface PropTypes extends IPizza {
-  isLoading: boolean;
+  // isLoading: boolean;
+  addedCount: number;
+  onClickAddPizza: ({
+    id,
+    name,
+    imageUrl,
+    price,
+  }: {
+    id: number;
+    name: string;
+    imageUrl: string;
+    price: number;
+  }) => void;
+}
+
+export interface CartItems {
+  id: number;
+  name: string;
+  imageUrl: string;
+  price: number;
+  size: number;
+  type: string;
 }
 
 const PizzaBlock: FC<PropTypes> = ({
@@ -16,7 +38,8 @@ const PizzaBlock: FC<PropTypes> = ({
   price,
   category,
   rating,
-  isLoading,
+  onClickAddPizza,
+  addedCount,
 }) => {
   const [activeType, setActiveType] = useState(types[0]);
   const [activeSize, setActiveSize] = useState(sizes[0]);
@@ -31,6 +54,17 @@ const PizzaBlock: FC<PropTypes> = ({
     setActiveSize(availableSizes[index]);
   };
 
+  const onAddPizza = () => {
+    const obj: CartItems = {
+      id,
+      name,
+      imageUrl,
+      price,
+      size: availableSizes[activeSize],
+      type: availableTypes[activeType],
+    };
+    onClickAddPizza(obj);
+  };
   return (
     <div className="pizza-block">
       <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
@@ -70,7 +104,7 @@ const PizzaBlock: FC<PropTypes> = ({
       </div>
       <div className="pizza-block__bottom">
         <div className="pizza-block__price">от {price} ₽</div>
-        <div className="button button--outline button--add">
+        <Button className="button--add" outline onClick={onAddPizza}>
           <svg
             width="12"
             height="12"
@@ -84,8 +118,8 @@ const PizzaBlock: FC<PropTypes> = ({
             />
           </svg>
           <span>Добавить</span>
-          <i>2</i>
-        </div>
+          {addedCount && <i>{addedCount}</i>}
+        </Button>
       </div>
     </div>
   );

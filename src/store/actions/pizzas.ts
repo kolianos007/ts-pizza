@@ -20,7 +20,7 @@ const pizzaActions = {
 export const fetchPizzas = (sortBy: any, category: number | null) => (dispatch: ThunkDispatch<AppStateType, {}, any>) => {
     dispatch(pizzaActions.setLoaded(false))
     axios
-      .get(`http://localhost:3001/pizzas?${category !== null ? `category=${category}` : ''}&_sort=${sortBy.type}&_order=${sortBy.order}`)
+      .get(`/pizzas?${category !== null ? `category=${category}` : ''}&_sort=${sortBy.type}&_order=${sortBy.order}`)
       .then((response) => dispatch(pizzaActions.setPizzas(response.data)));
 }
 
